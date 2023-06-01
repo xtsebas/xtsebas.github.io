@@ -1,0 +1,160 @@
+header{
+    position: relative;
+}
+
+#wavesection{
+    width: 100%;
+    height: 600px;
+    background: hsla(101, 57%, 43%, 0.315);  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, hsla(87, 67%, 63%, 0.247), hsla(101, 57%, 43%, 0.358));  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, hsla(87, 67%, 63%, 0.312), hsla(101, 57%, 43%, 0.323)), url("../img/4586132563_6d2030bda7_b.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.wave{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 130px;
+}
+
+.container-fluid{
+    width: 100%;
+    height: 100px;
+
+}
+#inicio{
+    width: 100%;
+    height: 70px;
+    background-color: rgb(146, 212, 47);
+    font-weight: bold;
+    text-align:left;
+    font-size:300%;
+}
+
+.container{
+    width: 100%;
+    box-shadow: 0px 4px 4px rgba(53, 51, 51, 0.25);
+    font-size: large;
+}
+
+#options{
+    width: 390px;
+    height: 480px;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-top: 5%;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    font-size: larger;
+    position: static;
+}
+
+#search{
+    margin-left: 0%;
+    margin-right: 0%;
+    height: 90px;
+}
+
+body {
+    margin-top: 100px; 
+    height: 100%;
+    overflow-x: hidden;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px; 
+    background-color: #c8c3c3;
+    text-align: center;
+    padding-top: 10px;
+    display: none; 
+}
+
+body.content-filled footer {
+    display: block;
+
+}
+
+#filtro{
+    margin-left: 10%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 12;
+}
+ #characteristics {
+     margin-top: -6%;
+     margin-left: 5%;
+ }
+
+ .img-cards {
+     margin-top: 200px;
+     margin-left: 10px;
+ }
+
+.backgroundBlue {
+    background: rgb(26, 56, 138);
+    background: linear-gradient(90deg, rgba(26, 56, 138, 1) 0%, rgba(57, 64, 174, 1) 52%, rgba(43, 118, 201, 1) 100%);
+}
+
+.backgroundOrange {
+    background: #fc4a1a;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f7b733, #fc4a1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.backgroundWhite {
+    background: #C9D6FF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #E2E2E2, #C9D6FF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.backgroundGreen{
+    background: rgb(26,138,56);
+    background: linear-gradient(90deg, rgba(26,138,56,1) 0%, rgba(64,174,57,1) 52%, rgba(118,201,43,1) 100%);
+}
+
+.backgroundBlueSky{
+    background: #1488CC;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2B32B2, #1488CC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2B32B2, #1488CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.backgroundNewWhite{
+    background-image: linear-gradient( 109.6deg,  rgba(223,234,247,1) 11.2%, rgba(244,248,252,1) 91.1% );
+}
+.custom-font {
+    font-family: 'Your Font Family', sans-serif;
+    color: ghostwhite;
+
+}
+.custom-input {
+    background-color: #ffffff;
+    border-color: #3aa416;
+    color: #ffffff;
+}
+
+.backgroundRed{
+    background: #D31027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #EA384D, #D31027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #EA384D, #D31027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.backgroundBrown{
+    background-image: linear-gradient(to top, #c79081 0%, #dfa579 100%);
+}
+
+

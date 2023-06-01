@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>University Knowledge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styleWeb.css"> 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://unpkg.com/neo4j-driver"></script> 
+    
+  </head>
+
+  <body>
+
+    <header style="position: fixed; top: 0; width: 100%;" class="fixed-header">
+      <div class="container-fluid bg-success d-flex justify-content-center">
+        <p class="justify-content-center text-light" style="font-size: 300%;">UNIVERSITY KNOWLEDGE</p>
+      </div>
+    </header>
+
+    <section id="wavesection">
+      <div class="wave">
+        <div style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M0.00,49.85 C-1.35,177.65 305.07,-114.66 500.00,49.85 L500.00,149.60 L0.00,149.60 Z" style="stroke: none; fill: rgb(146, 212, 47);"></path></svg> </div>    
+      </div>
+    </section>
+
+    <main>
+      <p></p>
+      <div id="inicio" class="d-flex justify-content-center"><p class="custom-font">BUSQUEDA DE UNIVERSIDAD</p></div>
+
+      <div id="search" class="container-fluid pr-0 backgroundNewWhite" style="margin-bottom: 1%;">
+        <div class="row ">
+          <div class="col mt-4">
+            <form action="#">
+              <label for="FACULTAD">FACULTAD</label>
+              <select name="facultades" id="fac">
+                <option value="Facultad de Ciencias Sociales, Juridicas y Economicas">Facultad de Ciencias Sociales, Juridicas y Economicas</option>
+                <option value="Facultad de Ingenieria">Facultad de Ingenieria</option>
+                <option value="Facultad de Medicina">Facultad de Medicina</option>
+                <option value="Facultad de Humanidades">Facultad de Humanidades</option>
+                <option value="Facultad de Ciencias y Tecnologia">Facultad de Ciencias y Tecnologia</option>
+                <option value="Facultad de Ciencias de la Salud">Facultad de Ciencias de la Salud</option>
+                <option value="Facultad de Arquitectura">Facultad de Arquitectura</option>
+                <option value="Facultad de Ciencias Empresariales">Facultad de Ciencias Empresariales</option>
+                <option value="Facultad de Educacion">Facultad de Educacion</option>
+                <option value="Facultad de Diseño y Comunicacion">Facultad de Diseño y Comunicacion</option>
+                <option value="Facultad de Ciencias Agricolas y Ambientales">Facultad de Ciencias Agricolas y Ambientales</option>
+                <option value="Facultad de Ciencias de la Comunicacion">Facultad de Ciencias de la Comunicacion</option>
+              </select>
+            </form>
+          </div>
+          <div class="col mt-4">
+            <form action="#">
+              <label for="DEP">DEPARTAMENTO</label>
+              <select name="departamento" id="DEP">
+                <option value="Alta Verapaz">Alta Verapaz</option>
+                <option value="Baja Verapaz">Baja Verapaz</option>
+                <option value="Chimaltenango">Chimaltenango</option>
+                <option value="Chiquimula">Chiquimula</option>
+                <option value="El Progreso">El Progreso</option>
+                <option value="Escuintla">Escuintla</option>
+                <option value="Ciudad de Guatemala">Ciudad de Guatemala</option>
+                <option value="Huehuetenango">Huehuetenango</option>
+                <option value="Izabal">Izabal</option>
+                <option value="Jalapa">Jalapa</option>
+                <option value="Jutiapa">Jutiapa</option>
+                <option value="Petén">Petén</option>
+                <option value="Quetzaltenango">Quetzaltenango</option>
+                <option value="Quiché">Quiché</option>
+                <option value="Retalhuleu">Retalhuleu</option>
+                <option value="Sacatepéquez">Sacatepéquez</option>
+                <option value="San Marcos">San Marcos</option>
+                <option value="Santa Rosa">Santa Rosa</option>
+                <option value="Sololá">Sololá</option>
+                <option value="Suchitepéquez">Suchitepéquez</option>
+                <option value="Totonicapán">Totonicapán</option>
+                <option value="Zacapa">Zacapa</option>
+              </select>
+            </form>
+          </div>
+          <div class="col mt-4">
+            <button type="submit" value="Search" class="btn btn-light" id="searchBt" onclick="runQuery()">Search</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="container-fluid"  style="padding-left: 0; padding-right: 0;">
+      <div class="row mb-1 ml-2">
+        <div class="col-4 mr-0">
+          <section id="options" class="options" style="display: none;">
+            <section id="characteristics">
+              <form action="#" >
+                <label for="mensualidad" class="mt-5">Mensualidad</label>
+                <section name="mensualidad" id="men">
+                  <span id="valorRango"></span>
+                  <input type="range" id="rango" name="rango" min="1" max="10000" step="1">
+                </section>
+              </form>
+              <script>
+                const rango = document.getElementById("rango");
+                const valorRango = document.getElementById("valorRango");
+
+                valorRango.innerHTML = rango.value;
+
+                rango.addEventListener("input", () => {
+                  valorRango.innerHTML = rango.value;
+                  let posicion = ((rango.value - rango.min) / (rango.max - rango.min)) * 100;
+                  valorRango.style.left = `${posicion}%`;
+                });
+              </script>
+      
+              <br> <br>
+      
+              <label for="examen">Universidad con examen de admision</label>
+              <br>
+              <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio1">Si</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="-1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio2">No importa</label>
+      
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="0" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">No</label>
+              </div>
+      
+              <br><br> <br>
+      
+              <label for="beca">Universidad con opcion a beca</label>
+              <br>
+              <div class="btn-group2" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btn" id="btn"  value="1" autocomplete="off" >
+                <label class="btn btn-outline-primary" for="btn">Si</label>
+              
+                <input type="radio" class="btn-check" name="btn" id="btn2" value="-1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btn2">No importa</label>
+      
+                <input type="radio" class="btn-check" name="btn" id="btn3" value="0" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btn3">No</label>
+              </div>
+            </section>
+            <div class="col">
+              <button type="submit" value="Filtro" class="btn btn-light" id="filtro" onclick="filter()"> FILTRO</button>
+            </div>
+          </section>
+        </div>
+        <div class="col-8 ml-0">
+          <section id="cards">
+            <div class="card mb-3 card backgroundBlue text-white" style="max-width: 1000px; display: none;" id="usac">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/Usac_logo.png" class="img-fluid rounded-start" style="height: 260px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="USAC">Universidad de San Carlos de Guatemala</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="usaclist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>San Marcos</li>
+                      <li>Quetzaltenango</li>
+                      <li>Huehuetenango</li>
+                      <li>Suchitepequez</li>
+                      <li>Solola</li>
+                      <li>Alta Verapaz</li>
+                      <li>Izabal</li>
+                      <li>Zacapa</li>
+                      <li>Chiquimula</li>
+                      <li>Jutiapa</li>
+                      <li>Jalapa</li>
+                      <li>El Progreso</li>
+                      <li>Chimaltenango</li>
+                      <li>Baja Verapaz</li>
+                      <li>Quiche</li>
+                    </ul>
+                    <p><b id="becusac">Opción a beca:</b> Si</p>
+                    <p><b id="examusac">Examen de Admisión:</b> Si</p>
+                    <p><b id="menusac">Mensualidad Promedio:</b> Q 00.00</p>
+                    <a href="https://www.usac.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundBlueSky text-white" style="max-width: 1000px; display: none;" id="url">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/landivar.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8  " >
+                  <div class="card-body">
+                    <h5 class="card-title" id="URL">Universidad Rafael Landivar</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="urllist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>Quetzaltenango</li>
+                      <li>Quiché</li>
+                    </ul>
+                    <p><b id="becurl">Opción a beca:</b> No</p>
+                    <p><b id="examurl">Examen de Admisión:</b> Si</p>
+                    <p><b id="menurl">Mensualidad Promedio:</b> Q 4,000.00</p>
+                    <a href="https://principal.url.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3  backgroundRed text-white" style="max-width: 1000px; background-color: rgb(255, 0, 0); display: none;" id="marro">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/marro.jpg" class="img-fluid rounded-start img-cards" style="height: 240px; margin-top: 3%">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="MARRO">Universidad Francisco Marroquin</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="marrolist">
+                      <li>Ciudad de Guatemala</li>
+                    </ul>
+                    <p><b id="becmarro">Opción a beca:</b> Si</p>
+                    <p><b id="exammarro">Examen de Admisión:</b> Si</p>
+                    <p><b id="menmarro">Mensualidad Promedio:</b> Q 5,500.00</p>
+                    <a href="https://www.ufm.edu/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundBrown text-white" style="max-width: 1000px; background-color: chocolate; display: none;" id="galileo">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/galileo.jpg" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="GALILEO">Universidad Galileo</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="galileolist">
+                      <li>Ciudad de Guatemala</li>
+                    </ul>
+                    <p><b id="becgalileo">Opción a beca:</b> Si</p>
+                    <p><b id="examgalileo">Examen de Admisión:</b> No</p>
+                    <p><b id="mengalileo">Mensualidad Promedio:</b> Q 3,500.00</p>
+                    <a href="https://www.galileo.edu/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundOrange text-white" style="max-width: 1000px; background-color: rgb(255, 64, 0); display: none;" id="mariano">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/umg.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="MARIANO">Universidad Mariano Galvez de Guatemala</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="marianolist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>San Marcos</li>
+                      <li>Quetzaltenango</li>
+                      <li>Huehuetenango</li>
+                      <li>Solola</li>
+                      <li>Alta Verapaz</li>
+                      <li>Zacapa</li>
+                      <li>Jutiapa</li>
+                      <li>Jalapa</li>
+                      <li>Santa Rosa</li>
+                    </ul>
+                    <p><b id="becmariano">Opción a beca:</b> Si</p>
+                    <p><b id="exammariano">Examen de Admisión:</b> No</p>
+                    <p><b id="menmariano">Mensualidad Promedio:</b> Q 4,200.00</p>
+                    <a href="https://www.umg.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundGreen text-white" style="max-width: 1000px; display: none;" id="uvg">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/uvg.jpg" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8 ">
+                  <div class="card-body">
+                    <h5 class="card-title" id="UVG">Universidad del Valle de Guatemala</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="uvglist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>Solola</li>
+                      <li>Escuintla</li>
+                    </ul>
+                    <p><b id="becuvg">Opción a beca:</b> Si</p>
+                    <p><b id="examuvg">Examen de Admisión:</b> Si</p>
+                    <p><b id="menuvg">Mensualidad Promedio:</b> Q 5,600.00</p>
+                    <a href="https://www.uvg.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 text-white" style="max-width: 1000px; background-color: rgb(249, 93, 93); display: none;" id="unis">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/unis.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="UNIS">Universidad del Itsmo</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="unislist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>Quetzaltenango</li>
+                    </ul>
+                    <p><b id="becunis">Opción a beca:</b> Si</p>
+                    <p><b id="examunis">Examen de Admisión:</b> Si</p>
+                    <p><b id="menunis">Mensualidad Promedio:</b> Q 4,600.00</p>
+                    <a href="https://unis.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundRed text-white" style="max-width: 1000px; background-color: rgb(143, 19, 225); display: none;" id="udo">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/udo.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="UDO">Universidad del Occidente</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="udolist">
+                      <li>Quetzaltenango</li>
+                      <li>San Marcos</li>
+                      <li>Totonicapán</li>
+                    </ul>
+                    <p><b id="becudo">Opción a beca:</b> Si</p>
+                    <p><b id="examudo">Examen de Admisión:</b> Si</p>
+                    <p><b id="menudo">Mensualidad Promedio:</b> Q 3,000.00</p>
+                    <a href="https://www.udeo.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundBlueSky text-white" style="max-width: 1000px; background-color: rgb(0, 179, 244); display: none;" id="pana">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/pana.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8 ba">
+                  <div class="card-body">
+                    <h5 class="card-title" id="PANA">Universidad Panamericana</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="panalist">
+                      <li>Ciudad de Guatemala</li>
+                    </ul>
+                    <p><b id="becpana">Opción a beca:</b> Si</p>
+                    <p><b id="exampana">Examen de Admisión:</b> Si</p>
+                    <p><b id="menpana">Mensualidad Promedio:</b> Q 3,600.00</p>
+                    <a href="https://www.upana.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundBlue text-white" style="max-width: 1000px; display: none;" id="vinci">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/vinci.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="VINCI">Universidad Da Vinci de Guatemala</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="vincilist">
+                      <li>Ciudad de Guatemala</li>
+                    </ul>
+                    <p><b id="becvinci">Opción a beca:</b> No</p>
+                    <p><b id="examvinci">Examen de Admisión:</b> Si</p>
+                    <p><b id="menvinci">Mensualidad Promedio:</b> Q 3,100.00</p>
+                    <a href="https://udv.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 backgroundGreen text-white" style="max-width: 1000px; display: none;" id="meso">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/meso.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="MESO">Universidad Mesoamericana</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="mesolist">
+                      <li>Ciudad de Guatemala</li>
+                      <li>Quetzaltenango</li>
+                      <li>Huehuetenango</li>
+                      <li>Chimaltenango</li>
+                      <li>San Marcos</li>
+                    </ul>
+                    <p><b id="becmeso">Opción a beca:</b> Si</p>
+                    <p><b id="exammeso">Examen de Admisión:</b> Si</p>
+                    <p><b id="menmeso">Mensualidad Promedio:</b> Q 2,900.00</p>
+                    <a href="https://www.mesoamericana.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-3 text-white backgroundWhite" style="max-width: 1000px; background-color: rgb(195, 184, 184); display: none;" id="inter">
+              <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-center">
+                  <img src="img/inter.png" class="img-fluid rounded-start" style="height: 240px;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title" id="INTER">Universidad InterNaciones</h5>
+                    <p class="card-text">Departamentos:</p>
+                    <ul id="l=interlist">
+                      <li>Ciudad de Guatemala</li>
+                    </ul>
+                    <p><b id="becinter">Opción a beca:</b> Si</p>
+                    <p><b id="examinter">Examen de Admisión:</b> Si</p>
+                    <p><b id="meninter">Mensualidad Promedio:</b> Q 3,100.00</p>
+                    <a href="https://uni.edu.gt/" target="_blank" class="btn btn-primary">Visitar Web</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const botonMostrar = document.getElementById("searchBt");
+      const elementoOculto = document.getElementById("options");
+
+      botonMostrar.addEventListener("click", () => {
+        elementoOculto.style.display = "block";
+        
+      });
+    </script>
+
+    <footer>
+      <div class="container-fluid bg-body-secondary" style="margin-top: 0%;">
+        <p>CONTACTANOS</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
